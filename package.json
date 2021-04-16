@@ -9,7 +9,8 @@
     "test": "ng test --browsers ChromeHeadless --watch false",
     "test:watch": "ng test --browsers ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "validate": "npm run test && npm run build"
   },
   "private": true,
   "dependencies": {

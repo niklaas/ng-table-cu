@@ -1,3 +1,6 @@
 <form>
   <input type="text" name="search" [ngModel]="searchTerm$ | async" (ngModelChange)="onSearchTermChanged($event)" />
+  <select *ngIf="dataCols$ | async as dataCols" name="column">
+    <option *ngFor="let dataCol of dataCols" value="">{{ dataCol }}</option>
+  </select>
 </form>

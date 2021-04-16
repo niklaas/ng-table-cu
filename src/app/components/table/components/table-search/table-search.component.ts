@@ -14,6 +14,8 @@ export class TableSearchComponent implements OnInit {
     this.tableStore.setSearchTerm(value);
   }
 
+  dataCols$ = this.tableStore.dataCols$;
+
   constructor(private tableStore: TableStore) {}
 
   ngOnInit(): void {}

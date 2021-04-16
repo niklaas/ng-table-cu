@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Post } from "./services/json-placeholder/post.model";
 
 @Component({
   selector: "app-root",
@@ -6,5 +8,9 @@ import { Component } from "@angular/core";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = "ng-table";
+  constructor(private store: Store<{ posts: Post[] }>) {}
+
+  ngOnInit() {
+    this.store.dispatch({ type: "[App Component] Load Posts" });
+  }
 }

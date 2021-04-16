@@ -24,9 +24,7 @@ export class TableStore extends ComponentStore<TableState> {
   dataRows$ = this.select(({ dataRows }) => dataRows);
   setDataRows = this.updater((state, dataRows: DataRow[]) => ({ ...state, dataRows }));
 
-  dataCols$ = this.select(({ dataRows }) => dataRows).pipe(
-    map(([firstRow, ..._]) => Object.keys(firstRow || {})) // TODO: maybe possible to get rid of null check here
-  );
+  dataCols$ = this.select(({ dataRows }) => dataRows).pipe(map(([firstRow, ..._]) => Object.keys(firstRow || {})));
 
   vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerm$, (dataRows, dataCols, searchTerm) => ({
     dataRows: dataRows.filter(dataRow => (dataRow["title"] as string).includes(searchTerm)),

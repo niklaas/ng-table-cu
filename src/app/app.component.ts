@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
 import { Post } from "./services/json-placeholder/post.model";
+
+import * as postsActions from "./store/actions/posts.actions";
 
 @Component({
   selector: "app-root",
@@ -8,9 +11,11 @@ import { Post } from "./services/json-placeholder/post.model";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  constructor(private store: Store<{ posts: Post[] }>) {}
+  posts$: Observable<Post[]> = this.store.select(state => state.posts);
 
   ngOnInit() {
-    this.store.dispatch({ type: "[App Component] Load Posts" });
+    this.store.dispatch(postsActions.load());
   }
+
+  constructor(private store: Store<{ posts: Post[] }>) {}
 }

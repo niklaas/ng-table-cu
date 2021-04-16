@@ -1,18 +1,22 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { PostsService } from "../services/json-placeholder/posts.service";
-import { mergeMap, map, catchError } from "rxjs/operators";
+
+import { PostsService } from "../../services/json-placeholder/posts.service";
+
 import { of } from "rxjs";
+import { mergeMap, map, catchError } from "rxjs/operators";
+
+import * as postsActions from "../actions/posts.actions";
 
 @Injectable()
 export class PostsEffects {
   loadPosts$ = createEffect(() =>
     this.actions$.pipe(
-      ofType("[App Component] Load Posts"),
+      ofType(postsActions.load),
       mergeMap(() =>
         this.postsService.getAll().pipe(
-          map(posts => ({ type: "[App Component] Posts Loaded Success", payload: posts })),
-          catchError(() => of({ type: "[Posts API] Posts Loaded Error" }))
+          map(posts => postsActions.loadedSuccess({ posts })),
+          catchError(() => of(postsActions.loadedError()))
         )
       )
     )

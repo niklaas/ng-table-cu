@@ -1,14 +1,12 @@
-<table>
+<table *ngIf="vm$ | async as vm">
   <thead>
     <tr>
-      <th>foo</th>
-      <th>bar</th>
+      <th *ngFor="let dataCol of vm.dataCols">{{ dataCol }}</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>quix</td>
-      <td>quox</td>
+    <tr *ngFor="let dataRow of vm.dataRows">
+      <td *ngFor="let dataCol of vm.dataCols">{{ dataRow[dataCol] }}</td>
     </tr>
   </tbody>
 </table>

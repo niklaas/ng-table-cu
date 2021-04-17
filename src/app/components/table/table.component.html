@@ -1,12 +1,16 @@
-<app-table-search></app-table-search>
 <table *ngIf="vm$ | async as vm">
   <thead>
     <tr>
       <th *ngFor="let dataCol of vm.dataCols">{{ dataCol }}</th>
     </tr>
+    <tr>
+      <th *ngFor="let dataCol of vm.dataCols">
+        <app-table-search [dataCol]="dataCol"></app-table-search>
+      </th>
+    </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let dataRow of vm.dataRows">
+    <tr *ngFor="let dataRow of vm.dataRowsFiltered">
       <td *ngFor="let dataCol of vm.dataCols">{{ dataRow[dataCol] }}</td>
     </tr>
   </tbody>

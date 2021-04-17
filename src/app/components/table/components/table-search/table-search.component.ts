@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { map } from "rxjs/operators";
 
 import { TableStore } from "../../table.store";
 
@@ -8,13 +9,15 @@ import { TableStore } from "../../table.store";
   styleUrls: ["./table-search.component.css"],
 })
 export class TableSearchComponent implements OnInit {
-  // TODO: make Directive out of this
-  searchTerm$ = this.tableStore.searchTerm$;
-  onSearchTermChanged(value: string) {
-    this.tableStore.setSearchTerm(value);
-  }
+  @Input()
+  dataCol = "";
 
-  dataCols$ = this.tableStore.dataCols$;
+  searchTerm$ = this.tableStore.searchTerms$.pipe(
+    map(searchTerms => searchTerms.find(searchTerm => searchTerm.dataCol === this.dataCol)?.term || "")
+  );
+  onSearchTermChanged(value: string) {
+    this.tableStore.updateSearchTerm({ dataCol: this.dataCol, term: value });
+  }
 
   constructor(private tableStore: TableStore) {}
 

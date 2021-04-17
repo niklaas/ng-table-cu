@@ -1,6 +1,12 @@
-<form>
-  <input type="text" name="search" [ngModel]="searchTerm$ | async" (ngModelChange)="onSearchTermChanged($event)" />
-  <select *ngIf="dataCols$ | async as dataCols" name="column">
-    <option *ngFor="let dataCol of dataCols" value="">{{ dataCol }}</option>
-  </select>
-</form>
+<!--
+  TODO: set type of input according to data in column i.e., `text` or `number`
+-->
+<input
+  [ngModel]="searchTerm$ | async"
+  (ngModelChange)="onSearchTermChanged($event)"
+  [attr.aria-label]="'search-' + dataCol"
+  type="text"
+/>
+<!--
+  TODO: add button to clear search term <17-04-21, niklaas>
+-->

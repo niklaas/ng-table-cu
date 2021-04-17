@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { DataRow, TableStore } from "./table.store";
+import { DataColName, DataRow, TableStore } from "./table.store";
 
 @Component({
   selector: "app-table",
@@ -11,10 +11,14 @@ import { DataRow, TableStore } from "./table.store";
 export class TableComponent implements OnInit {
   @Input() set dataRows(value: DataRow[] | null) {
     // TODO: get rid of null
-    this.tableStore.setDataRows(value || []);
+    this.tableStore.updateDataRows(value || []);
   }
 
   vm$ = this.tableStore.vm$;
+
+  onSearchTermChanged(dataCol: DataColName, term: string) {
+    this.tableStore.updateSearchTerm({ dataCol, term });
+  }
 
   constructor(private tableStore: TableStore) {}
 

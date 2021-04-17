@@ -2,32 +2,90 @@ import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map } from "rxjs/operators";
 
-export type DataRow = Record<string | number, unknown>;
+export type DataColName = string | number;
+export type DataRow = Record<DataColName, unknown>;
+
+/** Search term for a specific column */
+export type SearchTerm = { dataCol: DataColName; term: string };
 
 export interface TableState {
   /** The actual data */
-  dataRows: DataRow[];
+  dataRows: ReadonlyArray<DataRow>;
 
-  /** The search term */
-  searchTerm: string;
+  /** The search terms per column */
+  searchTerms: ReadonlyArray<SearchTerm>;
 }
 
 @Injectable()
 export class TableStore extends ComponentStore<TableState> {
   constructor() {
-    super({ dataRows: [], searchTerm: "" });
+    super({ dataRows: [], searchTerms: [] });
   }
 
-  searchTerm$ = this.select(({ searchTerm }) => searchTerm);
-  setSearchTerm = this.updater((state, searchTerm: string) => ({ ...state, searchTerm }));
-
   dataRows$ = this.select(({ dataRows }) => dataRows);
-  setDataRows = this.updater((state, dataRows: DataRow[]) => ({ ...state, dataRows }));
+  searchTerms$ = this.select(({ searchTerms }) => searchTerms);
 
   dataCols$ = this.select(({ dataRows }) => dataRows).pipe(map(([firstRow, ..._]) => Object.keys(firstRow || {})));
+  dataRowsFiltered$ = this.select(({ dataRows, searchTerms }) => ({ dataRows, searchTerms })).pipe(
+    map(({ dataRows, searchTerms }) =>
+      dataRows.filter(dataRow => {
+        // TODO: filtering can be improved b/c keeps on checking rows that are
+        // already filtered out
 
-  vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerm$, (dataRows, dataCols, searchTerm) => ({
-    dataRows: dataRows.filter(dataRow => (dataRow["title"] as string).includes(searchTerm)),
-    dataCols,
+        const searchTermOfCol = (col: DataColName) =>
+          searchTerms.find(searchTerm => searchTerm.dataCol === col)?.term || "";
+
+        return Object.entries(dataRow)
+          .map(([dataColName, cell]) => ({ dataColName, cell, colSearchTerm: searchTermOfCol(dataColName) }))
+          .filter(({ colSearchTerm }) => colSearchTerm)
+          .every(({ colSearchTerm, cell }) => {
+            if (typeof cell === "string") {
+              return cell.includes(colSearchTerm);
+            }
+
+            if (typeof cell === "number") {
+              // TODO: type casting might fail?
+              return cell === +colSearchTerm;
+            }
+
+            // If the cell is of some other type show it, b/c searching through
+            // it is not straightforward
+            return true;
+          });
+      })
+    )
+  );
+
+  updateDataRows = this.updater((state, dataRows: DataRow[]) => ({
+    ...state,
+    dataRows,
+    searchTerms: Object.keys(dataRows[0] || {}).map(dataCol => ({ dataCol, term: "" })),
   }));
+  updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
+    return {
+      ...state,
+      searchTerms: state.searchTerms.reduce<SearchTerm[]>((acc, curr) => {
+        if (curr.dataCol === searchTerm.dataCol) {
+          return [...acc, searchTerm];
+        }
+
+        return [...acc, curr];
+      }, []),
+    };
+  });
+
+  vm$ = this.select(
+    this.dataRows$,
+    this.dataRowsFiltered$,
+    this.dataCols$,
+    this.searchTerms$,
+    (dataRows, dataRowsFiltered, dataCols, searchTerms) => ({
+      dataRows,
+      dataRowsFiltered,
+      dataCols,
+      searchTerms: dataCols.map(
+        dataCol => searchTerms.find(searchTerm => searchTerm.dataCol === dataCol) || { dataCol, term: "" }
+      ),
+    })
+  );
 }

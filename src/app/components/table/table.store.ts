@@ -12,6 +12,13 @@ export interface TableState {
   /** The actual data */
   dataRows: ReadonlyArray<DataRow>;
 
+  /**
+   * The columns
+   *
+   * NOTE: This is used for horizontal ordering.
+   */
+  dataCols: ReadonlyArray<DataColName>;
+
   /** The search terms per column */
   searchTerms: ReadonlyArray<SearchTerm>;
 }
@@ -19,13 +26,13 @@ export interface TableState {
 @Injectable()
 export class TableStore extends ComponentStore<TableState> {
   constructor() {
-    super({ dataRows: [], searchTerms: [] });
+    super({ dataRows: [], searchTerms: [], dataCols: [] });
   }
 
   dataRows$ = this.select(({ dataRows }) => dataRows);
   searchTerms$ = this.select(({ searchTerms }) => searchTerms);
 
-  dataCols$ = this.select(({ dataRows }) => dataRows).pipe(map(([firstRow, ..._]) => Object.keys(firstRow || {})));
+  dataCols$ = this.select(({ dataCols }) => dataCols);
   dataRowsFiltered$ = this.select(({ dataRows, searchTerms }) => ({ dataRows, searchTerms })).pipe(
     map(({ dataRows, searchTerms }) =>
       dataRows.filter(dataRow => {
@@ -56,11 +63,16 @@ export class TableStore extends ComponentStore<TableState> {
     )
   );
 
-  updateDataRows = this.updater((state, dataRows: DataRow[]) => ({
-    ...state,
-    dataRows,
-    searchTerms: Object.keys(dataRows[0] || {}).map(dataCol => ({ dataCol, term: "" })),
-  }));
+  updateDataRows = this.updater((state, dataRows: DataRow[]) => {
+    const dataCols = Object.keys(dataRows[0] || {});
+
+    return {
+      ...state,
+      dataRows,
+      dataCols,
+      searchTerms: dataCols.map(dataCol => ({ dataCol, term: "" })),
+    };
+  });
   updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
     return {
       ...state,

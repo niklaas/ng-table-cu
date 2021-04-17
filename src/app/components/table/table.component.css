@@ -1,3 +1,11 @@
 table thead tr:nth-of-type(1) th {
   cursor: grab;
 }
+
+table thead tr:nth-of-type(1) th:active {
+  cursor: grabbing;
+}
+
+table thead tr:nth-of-type(1).cdk-drop-list-dragging th {
+  cursor: grabbing;
+}

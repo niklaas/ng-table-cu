@@ -1,6 +1,9 @@
+import { CdkDragDrop, copyArrayItem, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map } from "rxjs/operators";
+
+import produce from "immer";
 
 export type DataColName = string | number;
 export type DataRow = Record<DataColName, unknown>;
@@ -73,6 +76,12 @@ export class TableStore extends ComponentStore<TableState> {
       searchTerms: dataCols.map(dataCol => ({ dataCol, term: "" })),
     };
   });
+  moveDataCol = this.updater((state, movement: { previousIndex: number; currentIndex: number }) => ({
+    ...state,
+    dataCols: produce(state.dataCols, draftDataCols =>
+      moveItemInArray(draftDataCols, movement.previousIndex, movement.currentIndex)
+    ),
+  }));
   updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
     return {
       ...state,

@@ -1,7 +1,9 @@
 <table *ngIf="vm$ | async as vm">
   <thead>
-    <tr>
-      <th *ngFor="let dataCol of vm.dataCols">{{ dataCol }}</th>
+    <tr cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="onCdkDropListDropped($event)">
+      <th *ngFor="let dataCol of vm.dataCols" cdkDrag cdkDragLockAxis="x">
+        {{ dataCol }}
+      </th>
     </tr>
     <tr>
       <th *ngFor="let dataCol of vm.dataCols">

@@ -1,3 +1,4 @@
+import { CdkDragDrop } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
 import { DataColName, DataRow, TableStore } from "./table.store";
 
@@ -18,6 +19,11 @@ export class TableComponent implements OnInit {
 
   onSearchTermChanged(dataCol: DataColName, term: string) {
     this.tableStore.updateSearchTerm({ dataCol, term });
+  }
+
+  onCdkDropListDropped(cdkDragDrop: CdkDragDrop<HTMLTableRowElement>) {
+    const { previousIndex, currentIndex } = cdkDragDrop;
+    this.tableStore.moveDataCol({ previousIndex, currentIndex });
   }
 
   constructor(private tableStore: TableStore) {}

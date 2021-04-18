@@ -17,9 +17,7 @@ export interface TableState {
   dataRows: ReadonlyArray<DataRow>;
 
   /**
-   * The columns
-   *
-   * NOTE: This is used for horizontal ordering.
+   * Horizontal arrangement of columns from left to right;
    */
   dataCols: ReadonlyArray<DataColName>;
 

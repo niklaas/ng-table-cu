@@ -21,7 +21,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let dataRow of vm.dataRowsFiltered">
+    <tr *ngFor="let dataRow of vm.dataRows">
       <td *ngFor="let dataCol of vm.dataCols">{{ dataRow[dataCol] }}</td>
     </tr>
   </tbody>

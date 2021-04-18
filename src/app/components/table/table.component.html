@@ -1,8 +1,17 @@
 <table *ngIf="vm$ | async as vm">
   <thead>
-    <tr cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="onCdkDropListDropped($event)">
+    <tr
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="onCdkDropListDropped($event)"
+      appSortables
+      (sortingsChange)="onSortingsChanged($event)"
+    >
       <th *ngFor="let dataCol of vm.dataCols" cdkDrag cdkDragLockAxis="x">
-        {{ dataCol }}
+        <div class="th-flex-container">
+          <div>{{ dataCol }}</div>
+          <app-sortable [id]="dataCol"></app-sortable>
+        </div>
       </th>
     </tr>
     <tr>

@@ -1,16 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { EMPTY } from "rxjs";
 
-import { TableSearchComponent } from './table-search.component';
+import { TableSearchComponent } from "./table-search.component";
 
-describe('TableSearchComponent', () => {
+import { TableStore } from "../../table.store";
+
+describe("TableSearchComponent", () => {
   let component: TableSearchComponent;
   let fixture: ComponentFixture<TableSearchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TableSearchComponent ]
-    })
-    .compileComponents();
+      declarations: [TableSearchComponent],
+      providers: [{ provide: TableStore, useValue: { searchTerms$: EMPTY } }],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +22,7 @@ describe('TableSearchComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

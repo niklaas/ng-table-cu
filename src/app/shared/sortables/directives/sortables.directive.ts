@@ -1,10 +1,9 @@
 import { Directive, Output } from "@angular/core";
 
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
-import { debounce, debounceTime, map, mergeMap, switchMap, takeUntil, tap } from "rxjs/operators";
+import { debounceTime, map, switchMap } from "rxjs/operators";
 
 import { SortableComponent } from "../components/sortable/sortable.component";
-import { Sorting } from "../models/sorting.model";
 import { Sortings } from "../models/sortings.model";
 
 @Directive({

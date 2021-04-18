@@ -1,17 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SortablesDirective } from './directives/sortables.directive';
-import { SortableDirective } from './directives/sortable.directive';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-
+import { SortablesDirective } from "./sortables/directives/sortables.directive";
+import { SortableComponent } from "./sortables/components/sortable/sortable.component";
 
 @NgModule({
-  declarations: [
-    SortablesDirective,
-    SortableDirective
-  ],
-  imports: [
-    CommonModule
-  ]
+  declarations: [SortablesDirective, SortableComponent],
+  imports: [CommonModule],
+  exports: [SortablesDirective, SortableComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

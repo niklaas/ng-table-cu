@@ -40,7 +40,16 @@ export class SortableComponent implements OnInit {
       return;
     }
 
+    if (this._sortingSource.value === "desc") {
+      this._sortingSource.next("none");
+      return;
+    }
+
     this._sortingSource.next("asc");
+  }
+
+  resetSorting(): void {
+    this._sortingSource.next("none");
   }
 
   constructor(@Optional() @SkipSelf() public container: SortablesDirective) {}

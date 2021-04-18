@@ -13,6 +13,10 @@ export class SortablesDirective {
   private _sortablesSource = new BehaviorSubject<SortableComponent[]>([]);
   sortables$ = this._sortablesSource.asObservable();
 
+  get sortables() {
+    return this._sortablesSource.value;
+  }
+
   @Output() sortingsChange: Observable<Sortings> = this.sortables$.pipe(
     switchMap(sortables =>
       combineLatest(

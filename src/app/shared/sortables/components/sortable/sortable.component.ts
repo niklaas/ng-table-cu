@@ -35,6 +35,8 @@ export class SortableComponent implements OnInit {
   }
 
   toggleSorting(): void {
+    this._resetSortingOfSiblings();
+
     if (this._sortingSource.value === "asc") {
       this._sortingSource.next("desc");
       return;
@@ -48,8 +50,12 @@ export class SortableComponent implements OnInit {
     this._sortingSource.next("asc");
   }
 
-  resetSorting(): void {
+  private _resetSorting(): void {
     this._sortingSource.next("none");
+  }
+
+  private _resetSortingOfSiblings(): void {
+    this.container.sortables.filter(sortable => sortable !== this).forEach(sortable => sortable._resetSorting());
   }
 
   constructor(@Optional() @SkipSelf() public container: SortablesDirective) {}

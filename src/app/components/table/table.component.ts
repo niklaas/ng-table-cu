@@ -33,7 +33,7 @@ export class TableComponent implements OnInit {
   }
 
   onSortingsChanged(sortings: Sortings) {
-    this.tableStore.updateSorting(Object.entries(sortings).map(([dataCol, sorting]) => ({ dataCol, sorting })));
+    this.tableStore.updateSortings(Object.entries(sortings).map(([dataCol, sorting]) => ({ dataCol, sorting })));
   }
 
   constructor(private tableStore: TableStore) {}

@@ -6,7 +6,11 @@ import { map, withLatestFrom } from "rxjs/operators";
 import produce from "immer";
 
 export type DataColName = string | number;
+
+/** Row of actual data to display */
 export type DataRow = Record<DataColName, unknown>;
+
+/** Sorting for a specific column */
 export type Sorting = { dataCol: DataColName; sorting: "none" | "asc" | "desc" };
 
 /** Search term for a specific column */
@@ -14,18 +18,16 @@ export type SearchTerm = { dataCol: DataColName; term: string };
 
 export interface TableState {
   /** The actual data */
-  dataRows: ReadonlyArray<DataRow>;
+  dataRows: DataRow[];
 
-  /**
-   * Horizontal arrangement of columns from left to right;
-   */
-  dataCols: ReadonlyArray<DataColName>;
+  /** Horizontal arrangement of columns from left to right; */
+  dataCols: DataColName[];
 
   /** The search terms per column */
-  searchTerms: ReadonlyArray<SearchTerm>;
+  searchTerms: SearchTerm[];
 
   /** The sortings of the columns */
-  sortings: ReadonlyArray<Sorting>;
+  sortings: Sorting[];
 }
 
 @Injectable()
@@ -34,17 +36,15 @@ export class TableStore extends ComponentStore<TableState> {
     super({ dataRows: [], searchTerms: [], dataCols: [], sortings: [] });
   }
 
-  hasSearchTerms$ = this.select(
+  readonly hasSearchTerms$ = this.select(
     ({ searchTerms }) => !!searchTerms.length && searchTerms.some(searchTerm => searchTerm.term)
   );
-  hasSortings$ = this.select(
+  readonly hasSortings$ = this.select(
     ({ sortings }) => !!sortings.length && sortings.some(sorting => sorting.sorting !== "none")
   );
 
-  searchTerms$ = this.select(({ searchTerms }) => searchTerms);
-
-  dataCols$ = this.select(({ dataCols }) => dataCols);
-  dataRows$ = this.select(({ dataRows, searchTerms, sortings }) => ({
+  readonly dataCols$ = this.select(({ dataCols }) => dataCols);
+  readonly dataRows$ = this.select(({ dataRows, searchTerms, sortings }) => ({
     dataRows,
     searchTerms,
     sortings,
@@ -68,24 +68,26 @@ export class TableStore extends ComponentStore<TableState> {
       return dataRows;
     })
   );
+  readonly searchTerms$ = this.select(({ searchTerms }) => searchTerms);
+  readonly sortings$ = this.select(({ sortings }) => sortings);
 
-  updateDataRows = this.updater((state, dataRows: DataRow[]) => {
-    const dataCols = Object.keys(dataRows[0] || {});
+  readonly updateDataRows = this.updater((state, dataRows: DataRow[]) => {
+    const dataCols = this._dataColsFromDataRows(dataRows);
 
     return {
       ...state,
       dataRows,
       dataCols,
-      searchTerms: dataCols.map(dataCol => ({ dataCol, term: "" })),
+      searchTerms: this._searchTermsFromDataCols(dataCols),
     };
   });
-  moveDataCol = this.updater((state, movement: { previousIndex: number; currentIndex: number }) => ({
+  readonly moveDataCol = this.updater((state, movement: { previousIndex: number; currentIndex: number }) => ({
     ...state,
     dataCols: produce(state.dataCols, draftDataCols =>
       moveItemInArray(draftDataCols, movement.previousIndex, movement.currentIndex)
     ),
   }));
-  updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
+  readonly updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
     return {
       ...state,
       searchTerms: state.searchTerms.reduce<SearchTerm[]>((acc, curr) => {
@@ -97,9 +99,12 @@ export class TableStore extends ComponentStore<TableState> {
       }, []),
     };
   });
-  updateSorting = this.updater((state, sortings: Sorting[]) => ({ ...state, sortings }));
+  readonly updateSortings = this.updater((state, sortings: Sorting[]) => ({
+    ...state,
+    sortings,
+  }));
 
-  vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerms$, (dataRows, dataCols, searchTerms) => ({
+  readonly vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerms$, (dataRows, dataCols, searchTerms) => ({
     dataRows,
     dataCols,
     searchTerms: dataCols.map(
@@ -108,11 +113,19 @@ export class TableStore extends ComponentStore<TableState> {
     ),
   }));
 
-  _searchTermOfCol(searchTerms: readonly SearchTerm[], col: DataColName) {
+  private _dataColsFromDataRows(dataRows: DataRow[]): DataColName[] {
+    return Object.keys(dataRows[0] || []);
+  }
+
+  private _searchTermsFromDataCols(dataCols: DataColName[]): SearchTerm[] {
+    return dataCols.map(dataCol => ({ dataCol, term: "" }));
+  }
+
+  private _searchTermOfCol(searchTerms: SearchTerm[], col: DataColName) {
     return searchTerms.find(searchTerm => searchTerm.dataCol === col)?.term || "";
   }
 
-  _filterWithSearchTerms(searchTerms: readonly SearchTerm[]) {
+  private _filterWithSearchTerms(searchTerms: SearchTerm[]) {
     // TODO: filtering can be improved b/c keeps on checking rows that are
     // already filtered out
 
@@ -139,7 +152,7 @@ export class TableStore extends ComponentStore<TableState> {
         });
   }
 
-  private _sortWithSortings(sortings: readonly Sorting[]) {
+  private _sortWithSortings(sortings: Sorting[]) {
     return (a: DataRow, b: DataRow) => {
       // NOTE: only sorting by single column supported
       const { dataCol, sorting } = sortings.find(({ sorting }) => sorting !== "none") || {};

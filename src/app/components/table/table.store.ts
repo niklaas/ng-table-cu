@@ -1,4 +1,4 @@
-import { CdkDragDrop, copyArrayItem, moveItemInArray } from "@angular/cdk/drag-drop";
+import { copyArrayItem, moveItemInArray } from "@angular/cdk/drag-drop";
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { map, withLatestFrom } from "rxjs/operators";

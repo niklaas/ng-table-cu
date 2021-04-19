@@ -72,6 +72,8 @@ export class TableStore extends ComponentStore<TableState> {
   readonly sortings$ = this.select(({ sortings }) => sortings);
 
   readonly updateDataRows = this.updater((state, dataRows: DataRow[]) => {
+    // NOTE: Updating data rows resets both column ordering and search terms.
+
     const dataCols = this._dataColsFromDataRows(dataRows);
 
     return {

@@ -141,7 +141,6 @@ export class TableStore extends ComponentStore<TableState> {
           }
 
           if (typeof cell === "number") {
-            // TODO: type casting might fail?
             return cell === +colSearchTerm;
           }
 

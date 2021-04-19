@@ -79,19 +79,22 @@ function TableComponent_table_0_th_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](4, "app-sortable", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "div", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "\u2194");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](6, "app-sortable", 7);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const dataCol_r5 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](dataCol_r5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("id", dataCol_r5);
 } }
 function TableComponent_table_0_th_5_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "th");
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "app-table-search", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "app-table-search", 8);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const dataCol_r6 = ctx.$implicit;
@@ -123,7 +126,7 @@ function TableComponent_table_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "thead");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "tr", 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("cdkDropListDropped", function TableComponent_table_0_Template_tr_cdkDropListDropped_2_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r13); const ctx_r12 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r12.onCdkDropListDropped($event); })("sortingsChange", function TableComponent_table_0_Template_tr_sortingsChange_2_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r13); const ctx_r14 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](); return ctx_r14.onSortingsChanged($event); });
-    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, TableComponent_table_0_th_3_Template, 5, 2, "th", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, TableComponent_table_0_th_3_Template, 7, 2, "th", 2);
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "tr");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](5, TableComponent_table_0_th_5_Template, 2, 1, "th", 3);
@@ -145,10 +148,16 @@ function TableComponent_table_0_Template(rf, ctx) { if (rf & 1) {
 class TableComponent {
     constructor(tableStore) {
         this.tableStore = tableStore;
+        /** Emits the order of columns from left to right every time it is changed */
+        this.colsOrderChange = this.tableStore.dataCols$;
+        /** Emits all search terms every time any is changed */
+        this.searchTermsChange = this.tableStore.searchTerms$;
+        /** Emits all sortings every time any is changed */
+        this.sortingsChange = this.tableStore.sortings$;
         this.vm$ = this.tableStore.vm$;
     }
+    /** The data to display */
     set dataRows(value) {
-        // TODO: get rid of null
         this.tableStore.updateDataRows(value || []);
     }
     onSearchTermChanged(dataCol, term) {
@@ -159,17 +168,16 @@ class TableComponent {
         this.tableStore.moveDataCol({ previousIndex, currentIndex });
     }
     onSortingsChanged(sortings) {
-        this.tableStore.updateSorting(Object.entries(sortings).map(([dataCol, sorting]) => ({ dataCol, sorting })));
+        this.tableStore.updateSortings(Object.entries(sortings).map(([dataCol, sorting]) => ({ dataCol, sorting })));
     }
-    ngOnInit() { }
 }
 TableComponent.ɵfac = function TableComponent_Factory(t) { return new (t || TableComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_table_store__WEBPACK_IMPORTED_MODULE_0__["TableStore"])); };
-TableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: TableComponent, selectors: [["app-table"]], inputs: { dataRows: "dataRows" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([_table_store__WEBPACK_IMPORTED_MODULE_0__["TableStore"]])], decls: 2, vars: 3, consts: [[4, "ngIf"], ["cdkDropList", "", "cdkDropListOrientation", "horizontal", "appSortables", "", 3, "cdkDropListDropped", "sortingsChange"], ["cdkDrag", "", "cdkDragLockAxis", "x", 4, "ngFor", "ngForOf"], [4, "ngFor", "ngForOf"], ["cdkDrag", "", "cdkDragLockAxis", "x"], [1, "th-flex-container"], [3, "id"], [3, "dataCol"]], template: function TableComponent_Template(rf, ctx) { if (rf & 1) {
+TableComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: TableComponent, selectors: [["app-table"]], inputs: { dataRows: "dataRows" }, outputs: { colsOrderChange: "colsOrderChange", searchTermsChange: "searchTermsChange", sortingsChange: "sortingsChange" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([_table_store__WEBPACK_IMPORTED_MODULE_0__["TableStore"]])], decls: 2, vars: 3, consts: [[4, "ngIf"], ["cdkDropList", "", "cdkDropListOrientation", "horizontal", "appSortables", "", 3, "cdkDropListDropped", "sortingsChange"], ["cdkDrag", "", "cdkDragLockAxis", "x", 4, "ngFor", "ngForOf"], [4, "ngFor", "ngForOf"], ["cdkDrag", "", "cdkDragLockAxis", "x"], [1, "th-flex-container"], ["cdkDragHandle", ""], [3, "id"], [3, "dataCol"]], template: function TableComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, TableComponent_table_0_Template, 8, 3, "table", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](1, "async");
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](1, 1, ctx.vm$));
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["CdkDropList"], _shared_sortables_directives_sortables_directive__WEBPACK_IMPORTED_MODULE_4__["SortablesDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["CdkDrag"], _shared_sortables_components_sortable_sortable_component__WEBPACK_IMPORTED_MODULE_5__["SortableComponent"], _components_table_search_table_search_component__WEBPACK_IMPORTED_MODULE_6__["TableSearchComponent"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["AsyncPipe"]], styles: ["table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%] {\n  cursor: grab;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]:active {\n  cursor: grabbing;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1).cdk-drop-list-dragging   th[_ngcontent-%COMP%] {\n  cursor: grabbing;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   app-sortable[_ngcontent-%COMP%] {\n  cursor: pointer;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   .th-flex-container[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   .th-flex-container[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%] {\n  flex: initial;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYmxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxZQUFZO0FBQ2Q7O0FBRUE7RUFDRSxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxhQUFhO0FBQ2YiLCJmaWxlIjoidGFibGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInRhYmxlIHRoZWFkIHRyOm50aC1vZi10eXBlKDEpIHRoIHtcbiAgY3Vyc29yOiBncmFiO1xufVxuXG50YWJsZSB0aGVhZCB0cjpudGgtb2YtdHlwZSgxKSB0aDphY3RpdmUge1xuICBjdXJzb3I6IGdyYWJiaW5nO1xufVxuXG50YWJsZSB0aGVhZCB0cjpudGgtb2YtdHlwZSgxKS5jZGstZHJvcC1saXN0LWRyYWdnaW5nIHRoIHtcbiAgY3Vyc29yOiBncmFiYmluZztcbn1cblxudGFibGUgdGhlYWQgdHI6bnRoLW9mLXR5cGUoMSkgdGggYXBwLXNvcnRhYmxlIHtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG50YWJsZSB0aGVhZCB0cjpudGgtb2YtdHlwZSgxKSB0aCAudGgtZmxleC1jb250YWluZXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG59XG5cbnRhYmxlIHRoZWFkIHRyOm50aC1vZi10eXBlKDEpIHRoIC50aC1mbGV4LWNvbnRhaW5lciA+ICoge1xuICBmbGV4OiBpbml0aWFsO1xufVxuIl19 */"], changeDetection: 0 });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["CdkDropList"], _shared_sortables_directives_sortables_directive__WEBPACK_IMPORTED_MODULE_4__["SortablesDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["CdkDrag"], _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_3__["CdkDragHandle"], _shared_sortables_components_sortable_sortable_component__WEBPACK_IMPORTED_MODULE_5__["SortableComponent"], _components_table_search_table_search_component__WEBPACK_IMPORTED_MODULE_6__["TableSearchComponent"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["AsyncPipe"]], styles: ["table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   .cdk-drag-handle[_ngcontent-%COMP%] {\n  cursor: grab;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   .cdk-drag-handle[_ngcontent-%COMP%]:active {\n  cursor: grabbing;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1).cdk-drop-list-dragging   th[_ngcontent-%COMP%]   .cdk-drag-handle[_ngcontent-%COMP%] {\n  cursor: grabbing;\n}\n\ntable[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   tr[_ngcontent-%COMP%]:nth-of-type(1)   th[_ngcontent-%COMP%]   app-sortable[_ngcontent-%COMP%] {\n  cursor: pointer;\n}\n\n.th-flex-container[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n\n.th-flex-container[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%] {\n  flex: initial;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRhYmxlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxZQUFZO0FBQ2Q7O0FBRUE7RUFDRSxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxnQkFBZ0I7QUFDbEI7O0FBRUE7RUFDRSxlQUFlO0FBQ2pCOztBQUVBO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxhQUFhO0FBQ2YiLCJmaWxlIjoidGFibGUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbInRhYmxlIHRoZWFkIHRyOm50aC1vZi10eXBlKDEpIHRoIC5jZGstZHJhZy1oYW5kbGUge1xuICBjdXJzb3I6IGdyYWI7XG59XG5cbnRhYmxlIHRoZWFkIHRyOm50aC1vZi10eXBlKDEpIHRoIC5jZGstZHJhZy1oYW5kbGU6YWN0aXZlIHtcbiAgY3Vyc29yOiBncmFiYmluZztcbn1cblxudGFibGUgdGhlYWQgdHI6bnRoLW9mLXR5cGUoMSkuY2RrLWRyb3AtbGlzdC1kcmFnZ2luZyB0aCAuY2RrLWRyYWctaGFuZGxlIHtcbiAgY3Vyc29yOiBncmFiYmluZztcbn1cblxudGFibGUgdGhlYWQgdHI6bnRoLW9mLXR5cGUoMSkgdGggYXBwLXNvcnRhYmxlIHtcbiAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4udGgtZmxleC1jb250YWluZXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogcm93O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XG59XG5cbi50aC1mbGV4LWNvbnRhaW5lciA+ICoge1xuICBmbGV4OiBpbml0aWFsO1xufVxuIl19 */"], changeDetection: 0 });
 
 
 /***/ }),
@@ -190,6 +198,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Container that allows all its {@link SortableComponent} to register. Every
+ * time a {@link SortableComponent} changes its sorting, the container emits a
+ * {@link #sortingsChange}.
+ */
 class SortablesDirective {
     constructor() {
         this._sortablesSource = new rxjs__WEBPACK_IMPORTED_MODULE_0__["BehaviorSubject"]([]);
@@ -343,7 +356,6 @@ class TableStore extends _ngrx_component_store__WEBPACK_IMPORTED_MODULE_1__["Com
         super({ dataRows: [], searchTerms: [], dataCols: [], sortings: [] });
         this.hasSearchTerms$ = this.select(({ searchTerms }) => !!searchTerms.length && searchTerms.some(searchTerm => searchTerm.term));
         this.hasSortings$ = this.select(({ sortings }) => !!sortings.length && sortings.some(sorting => sorting.sorting !== "none"));
-        this.searchTerms$ = this.select(({ searchTerms }) => searchTerms);
         this.dataCols$ = this.select(({ dataCols }) => dataCols);
         this.dataRows$ = this.select(({ dataRows, searchTerms, sortings }) => ({
             dataRows,
@@ -362,35 +374,37 @@ class TableStore extends _ngrx_component_store__WEBPACK_IMPORTED_MODULE_1__["Com
             }
             return dataRows;
         }));
+        this.searchTerms$ = this.select(({ searchTerms }) => searchTerms);
+        this.sortings$ = this.select(({ sortings }) => sortings);
         this.updateDataRows = this.updater((state, dataRows) => {
-            const dataCols = Object.keys(dataRows[0] || {});
+            // NOTE: Updating data rows resets both column ordering and search terms.
+            const dataCols = this._dataColsFromDataRows(dataRows);
             return Object.assign(Object.assign({}, state), { dataRows,
-                dataCols, searchTerms: dataCols.map(dataCol => ({ dataCol, term: "" })) });
+                dataCols, searchTerms: this._searchTermsFromDataCols(dataCols) });
         });
         this.moveDataCol = this.updater((state, movement) => (Object.assign(Object.assign({}, state), { dataCols: Object(immer__WEBPACK_IMPORTED_MODULE_3__["default"])(state.dataCols, draftDataCols => Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_0__["moveItemInArray"])(draftDataCols, movement.previousIndex, movement.currentIndex)) })));
         this.updateSearchTerm = this.updater((state, searchTerm) => {
-            return Object.assign(Object.assign({}, state), { searchTerms: state.searchTerms.reduce((acc, curr) => {
-                    if (curr.dataCol === searchTerm.dataCol) {
-                        return [...acc, searchTerm];
-                    }
-                    return [...acc, curr];
-                }, []) });
+            return Object.assign(Object.assign({}, state), { searchTerms: state.searchTerms.reduce((acc, curr) => (curr.dataCol === searchTerm.dataCol ? [...acc, searchTerm] : [...acc, curr]), []) });
         });
-        this.updateSorting = this.updater((state, sortings) => (Object.assign(Object.assign({}, state), { sortings })));
+        this.updateSortings = this.updater((state, sortings) => (Object.assign(Object.assign({}, state), { sortings })));
         this.vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerms$, (dataRows, dataCols, searchTerms) => ({
             dataRows,
             dataCols,
-            searchTerms: dataCols.map(
-            // Make sure that there is an entry for each column (even if the term is empty)
-            dataCol => searchTerms.find(searchTerm => searchTerm.dataCol === dataCol) || { dataCol, term: "" }),
+            searchTerms,
         }));
+    }
+    _dataColsFromDataRows(dataRows) {
+        return Object.keys(dataRows[0] || []);
+    }
+    _searchTermsFromDataCols(dataCols) {
+        return dataCols.map(dataCol => ({ dataCol, term: "" }));
     }
     _searchTermOfCol(searchTerms, col) {
         var _a;
         return ((_a = searchTerms.find(searchTerm => searchTerm.dataCol === col)) === null || _a === void 0 ? void 0 : _a.term) || "";
     }
     _filterWithSearchTerms(searchTerms) {
-        // TODO: filtering can be improved b/c keeps on checking rows that are
+        // IDEA: filtering can be improved b/c keeps on checking rows that are
         // already filtered out
         return (dataRow) => Object.entries(dataRow)
             .map(([dataColName, cell]) => ({
@@ -403,7 +417,6 @@ class TableStore extends _ngrx_component_store__WEBPACK_IMPORTED_MODULE_1__["Com
                 return cell.includes(colSearchTerm);
             }
             if (typeof cell === "number") {
-                // TODO: type casting might fail?
                 return cell === +colSearchTerm;
             }
             // If the cell is of some other type show it, b/c searching through
@@ -450,10 +463,12 @@ TableStore.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInject
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _store_actions_posts_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/actions/posts.actions */ "quk0");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
-/* harmony import */ var _components_table_table_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/table/table.component */ "9pw4");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _store_actions_table_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/actions/table.actions */ "WBi7");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
+/* harmony import */ var _components_table_table_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/table/table.component */ "9pw4");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "ofXK");
+
 
 
 
@@ -467,17 +482,49 @@ class AppComponent {
     ngOnInit() {
         this.store.dispatch(_store_actions_posts_actions__WEBPACK_IMPORTED_MODULE_0__["load"]());
     }
+    onColsOrderChanged(dataCols) {
+        this.store.dispatch(Object(_store_actions_table_actions__WEBPACK_IMPORTED_MODULE_1__["changedColsOrder"])({ dataCols }));
+    }
+    onSearchTermsChanged(searchTerms) {
+        this.store.dispatch(Object(_store_actions_table_actions__WEBPACK_IMPORTED_MODULE_1__["changedSearchTerms"])({ searchTerms }));
+    }
+    onSortingsChanged(sortings) {
+        this.store.dispatch(Object(_store_actions_table_actions__WEBPACK_IMPORTED_MODULE_1__["changedSortings"])({ sortings }));
+    }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["Store"])); };
-AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 3, vars: 3, consts: [[1, "container"], [3, "dataRows"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "app-table", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](2, "async");
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"])); };
+AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 3, vars: 3, consts: [[1, "container"], [3, "dataRows", "colsOrderChange", "searchTermsChange", "sortingsChange"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "app-table", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("colsOrderChange", function AppComponent_Template_app_table_colsOrderChange_1_listener($event) { return ctx.onColsOrderChanged($event); })("searchTermsChange", function AppComponent_Template_app_table_searchTermsChange_1_listener($event) { return ctx.onSearchTermsChanged($event); })("sortingsChange", function AppComponent_Template_app_table_sortingsChange_1_listener($event) { return ctx.onSortingsChanged($event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipe"](2, "async");
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("dataRows", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](2, 1, ctx.posts$));
-    } }, directives: [_components_table_table_component__WEBPACK_IMPORTED_MODULE_3__["TableComponent"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["AsyncPipe"]], styles: ["[_nghost-%COMP%]     table {\n  table-layout: fixed;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQW1CO0FBQ3JCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3QgOjpuZy1kZWVwIHRhYmxlIHtcbiAgdGFibGUtbGF5b3V0OiBmaXhlZDtcbn1cbiJdfQ== */"] });
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("dataRows", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpipeBind1"](2, 1, ctx.posts$));
+    } }, directives: [_components_table_table_component__WEBPACK_IMPORTED_MODULE_4__["TableComponent"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_5__["AsyncPipe"]], styles: ["[_nghost-%COMP%]     table {\n  table-layout: fixed;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUJBQW1CO0FBQ3JCIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3QgOjpuZy1kZWVwIHRhYmxlIHtcbiAgdGFibGUtbGF5b3V0OiBmaXhlZDtcbn1cbiJdfQ== */"] });
+
+
+/***/ }),
+
+/***/ "WBi7":
+/*!************************************************!*\
+  !*** ./src/app/store/actions/table.actions.ts ***!
+  \************************************************/
+/*! exports provided: changedColsOrder, changedSearchTerms, changedSortings */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changedColsOrder", function() { return changedColsOrder; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changedSearchTerms", function() { return changedSearchTerms; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changedSortings", function() { return changedSortings; });
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
+
+const changedColsOrder = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createAction"])("[Table] Changed Order of Columns", Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["props"])());
+const changedSearchTerms = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createAction"])("[Table] Changed Search Terms", Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["props"])());
+const changedSortings = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createAction"])("[Table] Changed Sorting", Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["props"])());
 
 
 /***/ }),
@@ -534,7 +581,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
 /* harmony import */ var _store_effects_posts_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/effects/posts.effects */ "896x");
 /* harmony import */ var _store_reducers_posts_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store/reducers/posts.reducer */ "MD2O");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngrx/store-devtools */ "agSv");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../environments/environment */ "AytR");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
 
 
 
@@ -549,16 +601,20 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({ imports: [[
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineInjector"]({ imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
             _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["StoreModule"].forRoot({ posts: _store_reducers_posts_reducer__WEBPACK_IMPORTED_MODULE_7__["postsReducer"] }),
             _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forRoot([_store_effects_posts_effects__WEBPACK_IMPORTED_MODULE_6__["PostsEffects"]]),
+            _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_8__["StoreDevtoolsModule"].instrument({
+                maxAge: 25,
+                logOnly: _environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].production,
+            }),
             _components_table_table_module__WEBPACK_IMPORTED_MODULE_3__["TableModule"],
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["StoreRootModule"], _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsRootModule"], _components_table_table_module__WEBPACK_IMPORTED_MODULE_3__["TableModule"]] }); })();
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"], _ngrx_store__WEBPACK_IMPORTED_MODULE_5__["StoreRootModule"], _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsRootModule"], _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_8__["StoreDevtoolsModule"], _components_table_table_module__WEBPACK_IMPORTED_MODULE_3__["TableModule"]] }); })();
 
 
 /***/ }),
@@ -592,7 +648,6 @@ class TableSearchComponent {
     onSearchTermChanged(value) {
         this.tableStore.updateSearchTerm({ dataCol: this.dataCol, term: value });
     }
-    ngOnInit() { }
 }
 TableSearchComponent.ɵfac = function TableSearchComponent_Factory(t) { return new (t || TableSearchComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_table_store__WEBPACK_IMPORTED_MODULE_2__["TableStore"])); };
 TableSearchComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: TableSearchComponent, selectors: [["app-table-search"]], inputs: { dataCol: "dataCol" }, decls: 2, vars: 4, consts: [["type", "text", "placeholder", "Search...", 3, "ngModel", "ngModelChange"]], template: function TableSearchComponent_Template(rf, ctx) { if (rf & 1) {
@@ -662,6 +717,15 @@ function SortableComponent_span_4_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1, "\u2195");
     _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
 } }
+/**
+ * Displays vertical arrows to indicate sorting direction. Hand-shakes with
+ * {@link SortableComponent}s of the same container {@link SortablesDirective}.
+ * Resets all other components of the same container when its sorting is
+ * toggled.
+ *
+ * NOTE: Always required an id but need not be part of a {@link
+ * SortablesDirective}.
+ */
 class SortableComponent {
     constructor(container) {
         this.container = container;

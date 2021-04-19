@@ -3,6 +3,15 @@ import { BehaviorSubject } from "rxjs";
 import { SortablesDirective } from "../../directives/sortables.directive";
 import { Sorting } from "../../models/sorting.model";
 
+/**
+ * Displays vertical arrows to indicate sorting direction. Hand-shakes with
+ * {@link SortableComponent}s of the same container {@link SortablesDirective}.
+ * Resets all other components of the same container when its sorting is
+ * toggled.
+ *
+ * NOTE: Always required an id but need not be part of a {@link
+ * SortablesDirective}.
+ */
 @Component({
   selector: "app-sortable",
   templateUrl: "./sortable.component.html",
@@ -14,6 +23,10 @@ import { Sorting } from "../../models/sorting.model";
   },
 })
 export class SortableComponent implements OnInit {
+  /**
+   * Id that must be unique among {@link SortableComponent}s of the same
+   * container {@link SortablesDirective}.
+   */
   @Input() id: string | number | undefined;
 
   private _sortingSource = new BehaviorSubject<Sorting>("none");

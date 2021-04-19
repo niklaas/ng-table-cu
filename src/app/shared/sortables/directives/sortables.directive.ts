@@ -6,6 +6,11 @@ import { debounceTime, map, switchMap } from "rxjs/operators";
 import { SortableComponent } from "../components/sortable/sortable.component";
 import { Sortings } from "../models/sortings.model";
 
+/**
+ * Container that allows all its {@link SortableComponent} to register. Every
+ * time a {@link SortableComponent} changes its sorting, the container emits a
+ * {@link #sortingsChange}.
+ */
 @Directive({
   selector: "[appSortables]",
 })

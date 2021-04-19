@@ -12,13 +12,19 @@ import { Sortings } from "../../shared/sortables/models/sortings.model";
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [TableStore],
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
+  /** The data to display */
   @Input() set dataRows(value: DataRow[] | null) {
     this.tableStore.updateDataRows(value || []);
   }
 
+  /** Emits the order of columns from left to right every time it is changed */
   @Output() colsOrderChange = this.tableStore.dataCols$;
+
+  /** Emits all search terms every time any is changed */
   @Output() searchTermsChange = this.tableStore.searchTerms$;
+
+  /** Emits all sortings every time any is changed */
   @Output() sortingsChange = this.tableStore.sortings$;
 
   vm$ = this.tableStore.vm$;
@@ -37,6 +43,4 @@ export class TableComponent implements OnInit {
   }
 
   constructor(private tableStore: TableStore) {}
-
-  ngOnInit(): void {}
 }

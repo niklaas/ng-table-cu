@@ -10,7 +10,6 @@ import { StoreModule } from "@ngrx/store";
 
 import { PostsEffects } from "./store/effects/posts.effects";
 import { postsReducer } from "./store/reducers/posts.reducer";
-import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
   declarations: [AppComponent],

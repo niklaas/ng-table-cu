@@ -107,10 +107,7 @@ export class TableStore extends ComponentStore<TableState> {
   readonly vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerms$, (dataRows, dataCols, searchTerms) => ({
     dataRows,
     dataCols,
-    searchTerms: dataCols.map(
-      // Make sure that there is an entry for each column (even if the term is empty)
-      dataCol => searchTerms.find(searchTerm => searchTerm.dataCol === dataCol) || { dataCol, term: "" }
-    ),
+    searchTerms,
   }));
 
   private _dataColsFromDataRows(dataRows: DataRow[]): DataColName[] {

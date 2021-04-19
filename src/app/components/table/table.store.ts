@@ -92,19 +92,13 @@ export class TableStore extends ComponentStore<TableState> {
   readonly updateSearchTerm = this.updater((state, searchTerm: SearchTerm) => {
     return {
       ...state,
-      searchTerms: state.searchTerms.reduce<SearchTerm[]>((acc, curr) => {
-        if (curr.dataCol === searchTerm.dataCol) {
-          return [...acc, searchTerm];
-        }
-
-        return [...acc, curr];
-      }, []),
+      searchTerms: state.searchTerms.reduce<SearchTerm[]>(
+        (acc, curr) => (curr.dataCol === searchTerm.dataCol ? [...acc, searchTerm] : [...acc, curr]),
+        []
+      ),
     };
   });
-  readonly updateSortings = this.updater((state, sortings: Sorting[]) => ({
-    ...state,
-    sortings,
-  }));
+  readonly updateSortings = this.updater((state, sortings: Sorting[]) => ({ ...state, sortings }));
 
   readonly vm$ = this.select(this.dataRows$, this.dataCols$, this.searchTerms$, (dataRows, dataCols, searchTerms) => ({
     dataRows,
@@ -124,7 +118,7 @@ export class TableStore extends ComponentStore<TableState> {
     return searchTerms.find(searchTerm => searchTerm.dataCol === col)?.term || "";
   }
 
-  private _filterWithSearchTerms(searchTerms: SearchTerm[]) {
+  private _filterWithSearchTerms(searchTerms: SearchTerm[]): (dataRow: DataRow) => boolean {
     // IDEA: filtering can be improved b/c keeps on checking rows that are
     // already filtered out
 
@@ -150,7 +144,7 @@ export class TableStore extends ComponentStore<TableState> {
         });
   }
 
-  private _sortWithSortings(sortings: Sorting[]) {
+  private _sortWithSortings(sortings: Sorting[]): (a: DataRow, b: DataRow) => number {
     return (a: DataRow, b: DataRow) => {
       // NOTE: only sorting by single column supported
       const { dataCol, sorting } = sortings.find(({ sorting }) => sorting !== "none") || {};

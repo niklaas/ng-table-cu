@@ -1,6 +1,6 @@
 {
   "name": "ng-table-cu",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "prettier": "prettier --write \"**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
@@ -10,7 +10,7 @@
     "test:watch": "ng test --browsers ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "validate": "npm run test && npm run build"
+    "validate": "npm run test && npm run build -- --configuration production"
   },
   "private": true,
   "dependencies": {

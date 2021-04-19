@@ -14,12 +14,12 @@ table thead tr:nth-of-type(1) th app-sortable {
   cursor: pointer;
 }
 
-table thead tr:nth-of-type(1) th .th-flex-container {
+.th-flex-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-table thead tr:nth-of-type(1) th .th-flex-container > * {
+.th-flex-container > * {
   flex: initial;
 }

@@ -9,7 +9,7 @@ import { DataColName, TableStore } from "../../table.store";
   styleUrls: ["./table-search.component.css"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableSearchComponent implements OnInit {
+export class TableSearchComponent {
   @Input()
   dataCol: DataColName = "";
 
@@ -21,6 +21,4 @@ export class TableSearchComponent implements OnInit {
   }
 
   constructor(private tableStore: TableStore) {}
-
-  ngOnInit(): void {}
 }

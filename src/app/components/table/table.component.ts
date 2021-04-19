@@ -14,7 +14,6 @@ import { Sortings } from "../../shared/sortables/models/sortings.model";
 })
 export class TableComponent implements OnInit {
   @Input() set dataRows(value: DataRow[] | null) {
-    // TODO: get rid of null
     this.tableStore.updateDataRows(value || []);
   }
 

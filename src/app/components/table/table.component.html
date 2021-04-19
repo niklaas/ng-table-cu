@@ -10,6 +10,7 @@
       <th *ngFor="let dataCol of vm.dataCols" cdkDrag cdkDragLockAxis="x">
         <div class="th-flex-container">
           <div>{{ dataCol }}</div>
+          <div cdkDragHandle>&harr;</div>
           <app-sortable [id]="dataCol"></app-sortable>
         </div>
       </th>

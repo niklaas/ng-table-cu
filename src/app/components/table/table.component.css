@@ -1,12 +1,12 @@
-table thead tr:nth-of-type(1) th {
+table thead tr:nth-of-type(1) th .cdk-drag-handle {
   cursor: grab;
 }
 
-table thead tr:nth-of-type(1) th:active {
+table thead tr:nth-of-type(1) th .cdk-drag-handle:active {
   cursor: grabbing;
 }
 
-table thead tr:nth-of-type(1).cdk-drop-list-dragging th {
+table thead tr:nth-of-type(1).cdk-drop-list-dragging th .cdk-drag-handle {
   cursor: grabbing;
 }
 

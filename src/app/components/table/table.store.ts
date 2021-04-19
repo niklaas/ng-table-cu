@@ -125,7 +125,7 @@ export class TableStore extends ComponentStore<TableState> {
   }
 
   private _filterWithSearchTerms(searchTerms: SearchTerm[]) {
-    // TODO: filtering can be improved b/c keeps on checking rows that are
+    // IDEA: filtering can be improved b/c keeps on checking rows that are
     // already filtered out
 
     return (dataRow: DataRow) =>

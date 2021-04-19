@@ -1,5 +1,5 @@
 import { CdkDragDrop } from "@angular/cdk/drag-drop";
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from "@angular/core";
 
 import { DataColName, DataRow, TableStore } from "./table.store";
 
@@ -16,6 +16,10 @@ export class TableComponent implements OnInit {
   @Input() set dataRows(value: DataRow[] | null) {
     this.tableStore.updateDataRows(value || []);
   }
+
+  @Output() colsOrderChange = this.tableStore.dataCols$;
+  @Output() searchTermsChange = this.tableStore.searchTerms$;
+  @Output() sortingsChange = this.tableStore.sortings$;
 
   vm$ = this.tableStore.vm$;
 

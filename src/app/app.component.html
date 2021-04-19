@@ -1,3 +1,8 @@
 <div class="container">
-  <app-table [dataRows]="posts$ | async"></app-table>
+  <app-table
+    [dataRows]="posts$ | async"
+    (colsOrderChange)="onColsOrderChanged($event)"
+    (searchTermsChange)="onSearchTermsChanged($event)"
+    (sortingsChange)="onSortingsChanged($event)"
+  ></app-table>
 </div>

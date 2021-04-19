@@ -10,6 +10,8 @@ import { StoreModule } from "@ngrx/store";
 
 import { PostsEffects } from "./store/effects/posts.effects";
 import { postsReducer } from "./store/reducers/posts.reducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +20,10 @@ import { postsReducer } from "./store/reducers/posts.reducer";
     HttpClientModule,
     StoreModule.forRoot({ posts: postsReducer }),
     EffectsModule.forRoot([PostsEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     TableModule,
   ],
   bootstrap: [AppComponent],
